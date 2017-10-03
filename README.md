@@ -5,10 +5,10 @@ Project for Android Developer Nanodregree by Udacity.
 
 ## Screens
 
-![screen](../master/appPosters/popular_movies_nexus_5_poster.jpg)
+![screen](../master/aAppPosterst/pupular_movies_base_poster_v4.jpg)
 
-![screen](../master/art/phone-details.png)
+![screen](../master/AppPosters/popular_movies_nexus_5_poster.jpg)
 
-![screen](../master/art/tablet-port.png)
+![screen](../master/AppPosters/popular_movies_nexus_7_poster.jpg)
 
-![screen](../master/art/tablet-land.png)
+![screen](../master/AppPosters/popular_movies_pixel_c_poster.jpg)
