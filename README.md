@@ -4,16 +4,19 @@ Project for Android Developer Nanodregree by Udacity.
 ## Nexus 5 Screens
 ![screen](../master/art/popular_movies_nexus5_poster.jpg)
 
-## Nexus 5 Screens
+## Nexus 7 Screens
 ![screen](../master/art/popular_movies_nexus7_poster.jpg)
 
 ## Pixel C Screens
 ![screen](../master/art/popular_movies_pixelC_poster.jpg)
 
+<div></div>
+
 ###  Data Persistence
-<p>
-The titles and ids of the user's favorite movies are stored in a <code>ContentProvider</code> backed by a SQLite database. This <code>ContentProvider</code> is updated whenever the user favorites or unfavorites a movie.
-</p>
+* The titles and ids of the user's favorite movies are stored in a <code>ContentProvider</code> backed by a SQLite database. This <code>ContentProvider</code> is updated whenever the user favorites or unfavorites a movie.
+* When the "favorites" setting option is selected, the main view displays the entire favorites collection based on movie ids stored in the ContentProvider.
+
+<div></div>
 
 ## Extras
 Some extra features added:
