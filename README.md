@@ -18,7 +18,7 @@
     - [Nexus 7 Screens](#nexus-7-screens)
     - [Pixel C Screens](#pixel-c-screens)
 
-  - [License Apache 2.0](#license-apache-2.0)
+  - [License Apache 2.0](#license)
 
 
 # Popular Movies
@@ -88,7 +88,7 @@ Some extra features added:
 ## Pixel C Screens
 ![screen](../master/art/popular_movies_pixelC_poster.jpg)
 
-# License Apache 2.0
+# License
 
 Copyright 2017 Endika Aguilera
 
