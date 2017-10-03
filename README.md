@@ -46,3 +46,9 @@ Project for Android Developer Nanodregree by Udacity.
 Some extra features added:
 * Short by upcomig option addded.
 * Store favorites, top rated, most popular and upcoming movies into separeated databases.
+
+
+# Getting Started
+Popular Movies App uses The Movie Database API. In order to run the app you must create your own API key.
+[Click to create an API key](https://www.themoviedb.org/account/signup)
+When you get it, just set it in: gradle.properties -> MyTheMovieDBApiToken="INSERT_YOUR_KEY_HERE"
