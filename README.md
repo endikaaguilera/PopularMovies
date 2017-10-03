@@ -15,5 +15,7 @@ Project for Android Developer Nanodregree by Udacity.
 The titles and ids of the user's favorite movies are stored in a <code>ContentProvider</code> backed by a SQLite database. This <code>ContentProvider</code> is updated whenever the user favorites or unfavorites a movie.
 </p>
 
-#### Extras
-<p>* Finally saving favorites, top rated, most popular and upcoming movies into separeated databases</p>
+## Extras
+Some extra features added:
+* Short by upcomig option
+* Stored favorites, top rated, most popular and upcoming movies into separeated databases
