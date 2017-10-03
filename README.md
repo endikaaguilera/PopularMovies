@@ -1,3 +1,8 @@
+# Popular Movies
+
+- Project for [Android Developer Nanodregree](https://www.udacity.com/course/android-developer-nanodegree-by-google--nd801) by [Udacity](https://www.udacity.com/).
+- In this project, you will build an app to help users discover popular and recent movies. You will build a clean UI, sync to a server, and present information to the user. 
+
 # Navigate
 
   - [Popular Movies](#popular-movies)
@@ -20,12 +25,6 @@
     - [Pixel C Screens](#pixel-c-screens)
 
   - [License Apache 2.0](#license)
-
-
-# Popular Movies
-
-- Project for [Android Developer Nanodregree](https://www.udacity.com/course/android-developer-nanodegree-by-google--nd801) by [Udacity](https://www.udacity.com/).
-- In this project, you will build an app to help users discover popular and recent movies. You will build a clean UI, sync to a server, and present information to the user. 
 
 # Project Meets Required Specifications
 
