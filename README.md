@@ -13,7 +13,8 @@
   
   - [Getting Started](#getting-started)
   
-  - [Screens](#screens)
+  - [Art](#art)
+    - [App Poster](#app-poster)
     - [Nexus 5 Screens](#nexus-5-screens)
     - [Nexus 7 Screens](#nexus-7-screens)
     - [Pixel C Screens](#pixel-c-screens)
@@ -77,7 +78,9 @@ Some extra features added:
   - When you get it, just set it in: ```gradle.properties``` -> ```MyTheMovieDBApiToken="INSERT_YOUR_KEY_HERE"```
 
 
-# Screens
+# Art
+
+## App Poster
 ![screen](../master/art/popular_movies_base_poster.jpg)
 
 ## Nexus 5 Screens
