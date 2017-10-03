@@ -39,12 +39,7 @@ Project for Android Developer Nanodregree by Udacity.
 
 ## Data Persistence
 - [x] The titles and ids of the user's favorite movies are stored in a 
-```ruby
-require 'redcarpet'
-markdown = Redcarpet.new("Hello World!")
-puts markdown.to_html
-```
-ContentProvider</code> backed by a SQLite database. This <code>ContentProvider</code> is updated whenever the user favorites or unfavorites a movie.
+```ContentProvider``` backed by a SQLite database. This <code>ContentProvider</code> is updated whenever the user favorites or unfavorites a movie.
 - [x] When the "favorites" setting option is selected, the main view displays the entire favorites collection based on movie ids stored in the ContentProvider.
 
 # Extras
