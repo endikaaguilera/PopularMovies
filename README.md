@@ -1,6 +1,3 @@
-# Popular Movies
-Project for Android Developer Nanodregree by Udacity.
-
 # Navigate
   - [Popular Movies](#popular-movies)
   
@@ -12,13 +9,16 @@ Project for Android Developer Nanodregree by Udacity.
     - [Common Project Requirements](#common-project-requirements)
     - [User Interface - Layout](#user-interface---layout)
     - [User Interface - Function](#user-interface---function)
-    - [User Interface - Function](#user-interface---function)
     - [Network API Implementation](#network-api-implementation)
     - [Data Persistence](#data-persistence)
 
   - [Extras](#extras)
   
   - [Getting Started](#getting-started)
+
+# Popular Movies
+Project for Android Developer Nanodregree by Udacity.
+In this project, you will build an app to help users discover popular and recent movies. You will build a clean UI, sync to a server, and present information to the user.
 
 ## Nexus 5 Screens
 ![screen](../master/art/popular_movies_nexus5_poster.jpg)
@@ -63,11 +63,11 @@ Project for Android Developer Nanodregree by Udacity.
 
 # Extras
 Some extra features added:
-* Short by upcomig option addded.
-* Store favorites, top rated, most popular and upcoming movies into separeated databases.
+  - Short by upcomig option addded.
+  - Store favorites, top rated, most popular and upcoming movies into separeated databases.
 
 
 # Getting Started
-* Popular Movies App uses ```The Movie Database API```. In order to run the app you must create your own API key.
-* [Click to create an API key](https://www.themoviedb.org/account/signup)
-* When you get it, just set it in: ```gradle.properties``` -> ```MyTheMovieDBApiToken="INSERT_YOUR_KEY_HERE"```
+  - Popular Movies App uses ```The Movie Database API```. In order to run the app you must create your own API key.
+  - [Click to create an API key](https://www.themoviedb.org/account/signup)
+  - When you get it, just set it in: ```gradle.properties``` -> ```MyTheMovieDBApiToken="INSERT_YOUR_KEY_HERE"```
