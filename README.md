@@ -16,7 +16,7 @@
   - [Screens](#screens)
     - [Nexus 5 Screens](#nexus-5-screens)
     - [Nexus 7 Screens](#nexus-7-screens)
-    - [Pixel C Screens](#pixel-C-screens)
+    - [Pixel C Screens](#pixel-c-screens)
 
   - [License Apache 2.0](#license-apache-2.0)
 
