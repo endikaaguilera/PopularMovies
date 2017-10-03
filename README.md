@@ -40,7 +40,7 @@ Project for Android Developer Nanodregree by Udacity.
 ## Data Persistence
 - [x] The titles and ids of the user's favorite movies are stored in a 
 ```ContentProvider``` backed by a SQLite database. This ```ContentProvider``` is updated whenever the user favorites or unfavorites a movie.
-- [x] When the "favorites" setting option is selected, the main view displays the entire favorites collection based on movie ids stored in the ContentProvider.
+- [x] When the "favorites" setting option is selected, the main view displays the entire favorites collection based on movie ids stored in the ```ContentProvider```.
 
 # Extras
 Some extra features added:
@@ -49,7 +49,6 @@ Some extra features added:
 
 
 # Getting Started
-* Popular Movies App uses The Movie Database ```API```. In order to run the app you must create your own ```API``` key.
+* Popular Movies App uses ```The Movie Database API```. In order to run the app you must create your own API key.
 * [Click to create an API key](https://www.themoviedb.org/account/signup)
-* When you get it, just set it in: 
-      ```gradle.properties``` -> ```MyTheMovieDBApiToken="INSERT_YOUR_KEY_HERE"```
+* When you get it, just set it in: ```gradle.properties``` -> ```MyTheMovieDBApiToken="INSERT_YOUR_KEY_HERE"```
