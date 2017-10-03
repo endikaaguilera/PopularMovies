@@ -14,7 +14,9 @@
     - [Network API Implementation](#network-api-implementation)
     - [Data Persistence](#data-persistence)
 
-  - [Extras](#extras)
+   - [Libraries](#libraries)
+   
+   - [Extras](#extras)
   
   - [Getting Started](#getting-started)
   
@@ -64,6 +66,10 @@
 ```ContentProvider``` backed by a SQLite database. This ```ContentProvider``` is updated whenever the user favorites or unfavorites a movie.
 - [x] When the "favorites" setting option is selected, the main view displays the entire favorites collection based on movie ids stored in the ```ContentProvider```.
 
+# Libraries
+  - [Volley](https://developer.android.com/training/volley/index.html)
+  - [Gide](https://github.com/bumptech/glide)
+      
 # Extras
 
 Some extra features added:
