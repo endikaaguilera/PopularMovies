@@ -1,2 +1,2 @@
 # PopularMovies
-Project for Android Developer Nanodregree by Udcity.
+Project for Android Developer Nanodregree by Udacity.
