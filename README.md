@@ -1,8 +1,23 @@
-# PopularMovies
+# Popular Movies
 Project for Android Developer Nanodregree by Udacity.
 
 # Navigate
-  - [Nexus 5 Screens](#mexus-5-screens)
+  - [Popular Movies](#popular-movies)
+  
+  - [Nexus 5 Screens](#nexus-5-screens)
+  - [Nexus 7 Screens](#nexus-7-screens)
+  - [Pixel C Screens](#pixel-C-screens)
+
+  - [Project Meets Required Specifications](#project-meets-required-specifications)
+    - [Common Project Requirements](#common-project-requirements)
+    - [User Interface - Layout](#user-interface---layout)
+    - [User Interface - Function](#user-interface---function)
+    - [User Interface - Function](#user-interface---function)
+    - [Network API Implementation](#network-api-implementation)
+    - [Data Persistence](#data-persistence)
+
+  - [Extras](#extras)
+  
   - [Getting Started](#getting-started)
 
 ## Nexus 5 Screens
@@ -14,7 +29,7 @@ Project for Android Developer Nanodregree by Udacity.
 ## Pixel C Screens
 ![screen](../master/art/popular_movies_pixelC_poster.jpg)
 
-# Project Meets Required Specifications:
+# Project Meets Required Specifications
 ## Common Project Requirements
 - [x] App is written solely in the Java Programming Language.
 - [x] Movies are displayed in the main layout via a grid of their corresponding movie poster thumbnails.
