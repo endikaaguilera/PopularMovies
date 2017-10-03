@@ -78,6 +78,7 @@ Some extra features added:
 
 
 # Screens
+![screen](../master/art/popular_movies_base_poster.jpg)
 
 ## Nexus 5 Screens
 ![screen](../master/art/popular_movies_nexus5_poster.jpg)
