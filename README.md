@@ -10,15 +10,11 @@ Project for Android Developer Nanodregree by Udacity.
 ## Pixel C Screens
 ![screen](../master/art/popular_movies_pixelC_poster.jpg)
 
-<div></div>
+##  Data Persistence
+- [x] The titles and ids of the user's favorite movies are stored in a <code>ContentProvider</code> backed by a SQLite database. This <code>ContentProvider</code> is updated whenever the user favorites or unfavorites a movie.
+- [x] When the "favorites" setting option is selected, the main view displays the entire favorites collection based on movie ids stored in the ContentProvider.
 
-###  Data Persistence
-* The titles and ids of the user's favorite movies are stored in a <code>ContentProvider</code> backed by a SQLite database. This <code>ContentProvider</code> is updated whenever the user favorites or unfavorites a movie.
-* When the "favorites" setting option is selected, the main view displays the entire favorites collection based on movie ids stored in the ContentProvider.
-
-<div></div>
-
-## Extras
+# Extras
 Some extra features added:
 * Short by upcomig option
 * Stored favorites, top rated, most popular and upcoming movies into separeated databases
