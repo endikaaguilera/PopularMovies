@@ -13,7 +13,7 @@ Project for Android Developer Nanodregree by Udacity.
 # Project Meets Required Specifications:
 ## Common Project Requirements
 - [x] App is written solely in the Java Programming Language.
-- [x] App conforms to common standards found in the <p href="http://udacity.github.io/android-nanodegree-guidelines/core.html">Android Nanodegree General Project Guidelines.</p>
+- [x] App conforms to common standards found in the [Android Nanodegree General Project Guidelines.](http://udacity.github.io/android-nanodegree-guidelines/core.html)
 
 ## User Interface - Layout
 - [x] UI contains an element (e.g., a spinner or settings menu) to toggle the sort order of the movies by: most popular, highest rated.
