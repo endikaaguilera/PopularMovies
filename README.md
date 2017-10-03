@@ -13,7 +13,7 @@
   
   - [Getting Started](#getting-started)
   
-  - [Screenshots](#screenshots)
+  - [Screens](#screens)
     - [Nexus 5 Screens](#nexus-5-screens)
     - [Nexus 7 Screens](#nexus-7-screens)
     - [Pixel C Screens](#pixel-C-screens)
@@ -74,7 +74,7 @@ Some extra features added:
   - When you get it, just set it in: ```gradle.properties``` -> ```MyTheMovieDBApiToken="INSERT_YOUR_KEY_HERE"```
 
 
-# Screenshots
+# Screens
 
 ## Nexus 5 Screens
 ![screen](../master/art/popular_movies_nexus5_poster.jpg)
@@ -84,3 +84,20 @@ Some extra features added:
 
 ## Pixel C Screens
 ![screen](../master/art/popular_movies_pixelC_poster.jpg)
+
+# License
+
+```Copyright 2017 Endika Aguilera
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.```
+
