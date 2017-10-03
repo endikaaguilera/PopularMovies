@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="grid_view_padding">4dp</dimen>
+    <dimen name="grid_view_item_padding">2dp</dimen>
+
+    <dimen name="collapsing_layout_height">330dp</dimen>
+    <dimen name="collapsing_toolbar_margin_start">120dp</dimen>
+    <dimen name="collapsing_toolbar_margin_bottom">50dp</dimen>
+
+    <dimen name="backdrop_image_height">220dp</dimen>
+    <dimen name="poster_image_height">120dp</dimen>
+    <dimen name="poster_image_width">84dp</dimen>
+
+    <dimen name="static_margin">16dp</dimen>
+    <dimen name="dynamic_margin">16dp</dimen>
+
+    <dimen name="fav_margin">24dp</dimen>
+
+    <dimen name="margin_bottom_helper">100dp</dimen>
+
+    <dimen name="card_view_margin">12dp</dimen>
+
+    <dimen name="toolbar_margin_top">15dp</dimen>
+
+    <dimen name="card_corner_radius">2dp</dimen>
+
+    <dimen name="card_elevation">4dp</dimen>
+
+    <dimen name="drawable_padding">6dp</dimen>
+
+    <dimen name="trailer_card_margin_top">4dp</dimen>
+
+    <dimen name="overview_card_margin_top_one">34dp</dimen>
+    <dimen name="overview_card_margin_top_two">22dp</dimen>
+    <dimen name="overview_card_rating_text_size">40sp</dimen>
+    <dimen name="overview_card_original_title_text_size">24sp</dimen>
+
+    <dimen name="bottom_line_height">2dp</dimen>
+
+    <dimen name="review_card_bottom_line_margin_start">30dp</dimen>
+
+    <dimen name="no_margin">0dp</dimen>
+
+</resources>

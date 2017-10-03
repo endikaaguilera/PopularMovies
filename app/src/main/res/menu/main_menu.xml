@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--
+        <item
+            android:id="@+id/main_menu_reload_action"
+            android:icon="@drawable/ic_reload_24dp"
+            android:orderInCategory="1"
+            android:title="@string/menu_reload"
+            app:showAsAction="ifRoom" />
+    -->
+
+    <item
+        android:orderInCategory="100"
+        android:title="@string/menu_title"
+        android:icon="@drawable/ic_settings_24dp"
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/main_menu_popular_action"
+                    android:orderInCategory="1"
+                    android:title="@string/menu_popular"
+                    app:showAsAction="never" />
+
+                <item
+                    android:id="@+id/main_menu_top_rated_action"
+                    android:orderInCategory="1"
+                    android:title="@string/menu_top_rated"
+                    app:showAsAction="never" />
+
+                <item
+                    android:id="@+id/main_menu_upcoming_action"
+                    android:orderInCategory="1"
+                    android:title="@string/menu_upcoming"
+                    app:showAsAction="never" />
+
+                <item
+                    android:id="@+id/main_menu_favorites_action"
+                    android:orderInCategory="1"
+                    android:title="@string/menu_favorites"
+                    app:showAsAction="never" />
+
+            </group>
+        </menu>
+
+    </item>
+
+</menu>

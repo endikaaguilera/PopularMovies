@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="movie_details_year">Año: </string>
+    <string name="movie_details_original_title">Título Original</string>
+
+    <string name="menu_title">Ordenar Por</string>
+    <string name="menu_popular">Populares</string>
+    <string name="menu_top_rated">Más Valorados</string>
+    <string name="menu_upcoming">Próximamente</string>
+    <string name="menu_favorites">Favoritas</string>
+
+    <string name="exit_app_dialog_title">¿Deseas Salir?</string>
+    <string name="exit_app_dialog_message">¿Deseas salir de la aplicación?</string>
+
+    <string name="retry">REINTENTAR</string>
+    <string name="exit">SALIR</string>
+
+    <string name="error_data">No hay datos disponibles.</string>
+    <string name="error_dialog_query_error_message">Ha ocurrido algún problema al cargar los datos.</string>
+    <string name="error_dialog_query_error_title">Error de Consulta</string>
+
+    <string name="play">play</string>
+    <string name="movie_reviews_header">Opiniones</string>
+    <string name="movie_trailers_header">Trailers</string>
+    <string name="movie_overview_header">General</string>
+
+    <string name="choose_movie_hint">Selecciona una película</string>
+
+    <string name="share_intent_header">Compartir Trailer:</string>
+
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <stroke
+        android:width="2dp"
+        android:color="@color/colorDarkGray" />
+    <solid android:color="#FFFFFF" />
+    <padding
+        android:bottom="@dimen/grid_view_item_padding"
+        android:left="@dimen/grid_view_item_padding"
+        android:right="@dimen/grid_view_item_padding"
+        android:top="@dimen/grid_view_item_padding" />
+</shape>

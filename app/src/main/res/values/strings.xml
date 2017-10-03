@@ -1,0 +1,48 @@
+<resources>
+
+    <string name="app_name" translatable="false">Popular Movies</string>
+
+    <string name="error_data">No available data.</string>
+
+    <string name="menu_title">Sort By</string>
+    <string name="menu_popular">Popular</string>
+    <string name="menu_top_rated">Top Rated</string>
+    <string name="menu_upcoming">Upcoming</string>
+    <string name="menu_favorites">Favorites</string>
+
+    <string name="pref_sorting_key" translatable="false">sort</string>
+
+    <string name="pref_query_popular" translatable="false">popular</string>
+    <string name="pref_query_top_rated" translatable="false">rated</string>
+    <string name="pref_query_upcoming" translatable="false">upcoming</string>
+    <string name="pref_query_favorite" translatable="false">favorite</string>
+
+    <string name="title_activity_detail" translatable="false">Movie Details</string>
+
+    <string name="error_dialog_query_error_title">Query Result Error</string>
+    <string name="error_dialog_query_error_message">There was a problem retrieving data</string>
+
+    <string name="retry">RETRY</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="no" translatable="false">NO</string>
+    <string name="exit">EXIT</string>
+
+    <string name="exit_app_dialog_title">Exit App?</string>
+    <string name="exit_app_dialog_message">Do you want to quit the app?</string>
+
+    <string name="movie_details_year">Year: </string>
+    <string name="movie_details_original_title">Original Title</string>
+
+    <string name="play">play</string>
+
+    <string name="content_authority" translatable="false">com.thisobeystudio.popularmovies</string>
+    <string name="movie_reviews_header">Reviews</string>
+    <string name="movie_trailers_header">Trailers</string>
+    <string name="movie_overview_header">Overview</string>
+    <string name="choose_movie_hint">Please choose a movie</string>
+
+    <string name="rating_template" translatable="false">7/10</string>
+
+    <string name="share_intent_header">Share Trailer:</string>
+
+</resources>

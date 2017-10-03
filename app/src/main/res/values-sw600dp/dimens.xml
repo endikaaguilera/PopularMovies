@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="collapsing_layout_height">400dp</dimen>
+    <dimen name="collapsing_toolbar_margin_start">150dp</dimen>
+
+    <dimen name="backdrop_image_height">290dp</dimen>
+
+    <dimen name="poster_image_height">152dp</dimen>
+    <dimen name="poster_image_width">96dp</dimen>
+
+    <dimen name="dynamic_margin">20dp</dimen>
+
+    <dimen name="card_view_margin">14dp</dimen>
+
+</resources>
