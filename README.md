@@ -68,7 +68,7 @@
 
 # Libraries
   - [Volley](https://developer.android.com/training/volley/index.html)
-  - [Gide](https://github.com/bumptech/glide)
+  - [Glide](https://github.com/bumptech/glide)
       
 # Extras
 
