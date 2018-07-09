@@ -1,5 +1,6 @@
 package com.thisobeystudio.popularmovies.adapters;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.thisobeystudio.popularmovies.R;
-import com.thisobeystudio.popularmovies.objects.Review;
+import com.thisobeystudio.popularmovies.models.Review;
 
 import java.util.List;
 
@@ -42,22 +43,18 @@ public class ReviewsRVAdapter extends RecyclerView.Adapter<ReviewsRVAdapter.Revi
         return reviews.size();
     }
 
+    @NonNull
     @Override
-    public ReviewViewHolder onCreateViewHolder(ViewGroup parent, int i) {
-        View rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_card, parent, false);
+    public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        View rowView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.review_card, parent, false);
         return new ReviewViewHolder(rowView);
     }
 
     @Override
-    public void onBindViewHolder(final ReviewViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final ReviewViewHolder viewHolder, int i) {
         viewHolder.reviewAuthor.setText(reviews.get(i).getAuthor());
         viewHolder.reviewContent.setText(reviews.get(i).getContent());
     }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
 
 }

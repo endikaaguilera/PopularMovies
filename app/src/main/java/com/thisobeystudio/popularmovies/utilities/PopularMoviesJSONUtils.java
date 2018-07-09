@@ -5,15 +5,33 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 
-import com.thisobeystudio.popularmovies.data.PopularMoviesContract;
-import com.thisobeystudio.popularmovies.objects.Review;
-import com.thisobeystudio.popularmovies.objects.Trailer;
+import com.thisobeystudio.popularmovies.models.Review;
+import com.thisobeystudio.popularmovies.models.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.COLUMN_BACKDROP_PATH;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.COLUMN_ID;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.COLUMN_ORIGINAL_LANGUAGE;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.COLUMN_ORIGINAL_TITLE;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.COLUMN_OVERVIEW;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.COLUMN_POSTER_PATH;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.COLUMN_RELEASE_DATE;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.COLUMN_TITLE;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.COLUMN_VOTE_AVERAGE;
 
 /**
  * Created by thisobeystudio on 5/8/17.
@@ -27,7 +45,21 @@ public class PopularMoviesJSONUtils {
     private static final String PM_QUERY_RESULTS = "results";
 
     /* movies */
-    // AVAILABLE PARAMETERS >>> id, vote_count, video, vote_average, title, popularity, poster_path, original_language, original_title, genre_ids, backdrop_path, adult, overview, release_date;
+    // AVAILABLE PARAMETERS >>>
+    // id
+    // vote_count
+    // video,
+    // vote_average,
+    // title,
+    // popularity,
+    // poster_path,
+    // original_language,
+    // original_title,
+    // genre_ids,
+    // backdrop_path,
+    // adult,
+    // overview,
+    // release_date;
     private static final String PM_QUERY_ID = "id";
     private static final String PM_QUERY_VOTE_AVERAGE = "vote_average";
     private static final String PM_QUERY_TITLE = "title";
@@ -39,12 +71,24 @@ public class PopularMoviesJSONUtils {
     private static final String PM_QUERY_RELEASE_DATE = "release_date";
 
     /* reviews */
-    // AVAILABLE PARAMETERS >>> "id", "author", "content" ,"url"
+    // AVAILABLE PARAMETERS >>>
+    // "id",
+    // "author",
+    // "content"
+    // ,"url"
     private static final String PM_QUERY_AUTHOR = "author";
     private static final String PM_QUERY_CONTENT = "content";
 
     /* trailers */
-    // AVAILABLE PARAMETERS >>> "id", "iso_639_1", "iso_3166_1", "key", "name", "site", "size", "type"
+    // AVAILABLE PARAMETERS >>>
+    // "id",
+    // "iso_639_1",
+    // "iso_3166_1",
+    // "key",
+    // "name",
+    // "site",
+    // "size",
+    // "type"
     private static final String PM_QUERY_KEY = "key";
     private static final String PM_QUERY_NAME = "name";
     private static final String PM_QUERY_SIZE = "size";
@@ -55,7 +99,9 @@ public class PopularMoviesJSONUtils {
      * @param contentUri passed contentUri
      * @throws JSONException handle JSONException
      */
-    public static void getPopularContentFromJson(Context context, JSONObject jsonObject, Uri contentUri) throws JSONException {
+    public static void getPopularContentFromJson(Context context,
+                                                 JSONObject jsonObject,
+                                                 Uri contentUri) throws JSONException {
 
         if (jsonObject != null && jsonObject.has(PM_QUERY_RESULTS)) {
 
@@ -66,15 +112,24 @@ public class PopularMoviesJSONUtils {
             for (int i = 0; i < results.length(); i++) {
 
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_ID, results.getJSONObject(i).getString(PM_QUERY_ID));
-                contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_VOTE_AVERAGE, results.getJSONObject(i).getString(PM_QUERY_VOTE_AVERAGE));
-                contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_TITLE, results.getJSONObject(i).getString(PM_QUERY_TITLE));
-                contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_POSTER_PATH, results.getJSONObject(i).getString(PM_QUERY_POSTER_PATH));
-                contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_ORIGINAL_LANGUAGE, results.getJSONObject(i).getString(PM_QUERY_ORIGINAL_LANGUAGE));
-                contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_ORIGINAL_TITLE, results.getJSONObject(i).getString(PM_QUERY_ORIGINAL_TITLE));
-                contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_BACKDROP_PATH, results.getJSONObject(i).getString(PM_QUERY_BACKDROP_PATH));
-                contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_OVERVIEW, results.getJSONObject(i).getString(PM_QUERY_OVERVIEW));
-                contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_RELEASE_DATE, results.getJSONObject(i).getString(PM_QUERY_RELEASE_DATE));
+                contentValues.put(COLUMN_ID, results.getJSONObject(i)
+                        .getString(PM_QUERY_ID));
+                contentValues.put(COLUMN_VOTE_AVERAGE, results.getJSONObject(i)
+                        .getString(PM_QUERY_VOTE_AVERAGE));
+                contentValues.put(COLUMN_TITLE, results.getJSONObject(i)
+                        .getString(PM_QUERY_TITLE));
+                contentValues.put(COLUMN_POSTER_PATH, results.getJSONObject(i)
+                        .getString(PM_QUERY_POSTER_PATH));
+                contentValues.put(COLUMN_ORIGINAL_LANGUAGE, results.getJSONObject(i)
+                        .getString(PM_QUERY_ORIGINAL_LANGUAGE));
+                contentValues.put(COLUMN_ORIGINAL_TITLE, results.getJSONObject(i)
+                        .getString(PM_QUERY_ORIGINAL_TITLE));
+                contentValues.put(COLUMN_BACKDROP_PATH, results.getJSONObject(i)
+                        .getString(PM_QUERY_BACKDROP_PATH));
+                contentValues.put(COLUMN_OVERVIEW, results.getJSONObject(i)
+                        .getString(PM_QUERY_OVERVIEW));
+                contentValues.put(COLUMN_RELEASE_DATE, results.getJSONObject(i)
+                        .getString(PM_QUERY_RELEASE_DATE));
 
                 contentValuesArr[i] = contentValues;
 

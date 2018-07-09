@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.thisobeystudio.popularmovies.R;
-import com.thisobeystudio.popularmovies.objects.Movie;
+import com.thisobeystudio.popularmovies.models.Movie;
 
 /**
  * Created by thisobeystudio on 14/8/17.
@@ -37,29 +37,29 @@ public class OverviewFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_overview, container, false);
 
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         setupOverViewDetails(view);
-
     }
 
     /**
-     *
      * setup overview card details
      *
      * @param view root view
      */
     private void setupOverViewDetails(View view) {
 
-        if (getArguments().containsKey(MainActivity.INTENT_EXTRA_MOVIE)) {
+        if (getArguments() != null && getArguments().containsKey(MainActivity.INTENT_EXTRA_MOVIE)) {
 
             Movie movie = getArguments().getParcelable(MainActivity.INTENT_EXTRA_MOVIE);
 

@@ -1,15 +1,16 @@
 package com.thisobeystudio.popularmovies.activities;
 
+import android.app.LoaderManager;
+import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
@@ -23,7 +24,6 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -34,9 +34,8 @@ import com.thisobeystudio.popularmovies.R;
 import com.thisobeystudio.popularmovies.adapters.GridViewAdapter;
 import com.thisobeystudio.popularmovies.data.MoviesProvider;
 import com.thisobeystudio.popularmovies.data.PopularMoviesContract;
-import com.thisobeystudio.popularmovies.objects.Movie;
+import com.thisobeystudio.popularmovies.models.Movie;
 import com.thisobeystudio.popularmovies.utilities.NetworkUtils;
-import com.thisobeystudio.popularmovies.utilities.PopularMoviesJSONUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,24 +43,31 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.thisobeystudio.popularmovies.utilities
+        .PopularMoviesJSONUtils.getPopularContentFromJson;
+
+
 /**
- *
  * Popular Movies project for Udacity Android Developer Nanodegree Program
  * https://www.udacity.com/course/android-developer-nanodegree-by-google--nd801
- *
+ * <p>
  * date: Summer 2017
- *
  */
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class MainActivity extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Cursor> {
 
     // tag used for debug logs
     private final String TAG = MainActivity.class.getSimpleName();
 
-    private int mSortCode = MoviesProvider.CODE_POPULAR;                                    // sort code
-    private Uri mSortUri = PopularMoviesContract.PopularMoviesEntry.CONTENT_URI_POPULAR;    // sort Uri
-    private String mSortUrl = NetworkUtils.buildUrlString(NetworkUtils.SORT_BY_POPULAR);    // sort Url
-    private boolean mSortedByFavorites = false;                                             // is sort by favorites
+    // sort code
+    private int mSortCode = MoviesProvider.CODE_POPULAR;
+    // sort Uri
+    private Uri mSortUri = PopularMoviesContract.PopularMoviesEntry.CONTENT_URI_POPULAR;
+    // sort Url
+    private String mSortUrl = NetworkUtils.buildUrlString(NetworkUtils.SORT_BY_POPULAR);
+    // is sort by favorites
+    private boolean mSortedByFavorites = false;
 
     // ProgressBar
     private ProgressBar progressBar;
@@ -109,19 +115,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressBar = (ProgressBar) findViewById(R.id.main_progress_bar);
+        progressBar = findViewById(R.id.main_progress_bar);
         // disable touch interactions on progress
         progressBar.setOnClickListener(null);
 
         // set sort values and init preferences if needed
         setSortTypeResources(getSortPreference());
 
+
         setProgressBarVisibility(View.VISIBLE);
 
         if (savedInstanceState == null) {
             loadData();
         } else {
-            getSupportLoaderManager().initLoader(mSortCode, savedInstanceState, MainActivity.this);
+            getLoaderManager().initLoader(mSortCode, savedInstanceState, this);
         }
 
         if (findViewById(R.id.details_fragment) != null) {
@@ -137,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     protected void onDestroy() {
+        // todo clear data here
         super.onDestroy();
     }
 
@@ -207,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return true;
     }
 
+    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int loaderId, Bundle bundle) {
 
@@ -224,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
 
         setProgressBarVisibility(View.INVISIBLE);
 
@@ -259,9 +268,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      * @param loader The Loader that is being reset.
      */
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
         /*
-         * Since this Loader's data is now invalid, we need to clear the Adapter that is displaying the data.
+         * Since this Loader's data is now invalid,
+         * we need to clear the Adapter that is displaying the data.
          */
         gridViewAdapter.swapCursor(null);
 
@@ -277,11 +287,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         try {
 
             if (mSortedByFavorites) {
-                getSupportLoaderManager().restartLoader(mSortCode, null, MainActivity.this);
+                getLoaderManager().restartLoader(mSortCode, null, this);
             } else if (NetworkUtils.isInternetAvailable(MainActivity.this)) {
                 getMoviesJSON(mSortUrl, mSortUri);
             } else {
-                getSupportLoaderManager().initLoader(mSortCode, null, MainActivity.this);
+                getLoaderManager().initLoader(mSortCode, null, this);
             }
 
         } catch (Exception e) {
@@ -295,10 +305,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     /**
-     *
      * volley query to get Movies JSON data
      *
-     * @param url query url
+     * @param url        query url
      * @param contentUri content Uri
      */
     private void getMoviesJSON(String url, final Uri contentUri) {
@@ -306,41 +315,50 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (!url.equals("") && !mSortedByFavorites) {
 
             RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-            JsonObjectRequest sr = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
+            JsonObjectRequest sr = new JsonObjectRequest(
+                    Request.Method.GET,
+                    url,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
 
-                    if (response != null) {
+                            if (response != null) {
 
-                        try {
+                                try {
 
-                            PopularMoviesJSONUtils.getPopularContentFromJson(MainActivity.this, response, contentUri);
-                            getSupportLoaderManager().initLoader(mSortCode, null, MainActivity.this);
+                                    getPopularContentFromJson(
+                                            MainActivity.this,
+                                            response,
+                                            contentUri);
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                                    getLoaderManager().initLoader(mSortCode,
+                                            null,
+                                            MainActivity.this);
 
-                            errorDialog(
-                                    getString(R.string.error_dialog_query_error_title),
-                                    getString(R.string.error_dialog_query_error_message));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
 
-                            Log.e(TAG, "getMoviesJSON try response exception");
+                                    errorDialog(
+                                            getString(R.string.error_dialog_query_error_title),
+                                            getString(R.string.error_dialog_query_error_message));
+
+                                    Log.e(TAG, "getMoviesJSON try response exception");
+
+                                }
+
+                            } else {
+
+                                errorDialog(
+                                        getString(R.string.error_dialog_query_error_title),
+                                        getString(R.string.error_dialog_query_error_message));
+
+                                Log.e(TAG, "response = null");
+
+                            }
 
                         }
 
-                    } else {
-
-                        errorDialog(
-                                getString(R.string.error_dialog_query_error_title),
-                                getString(R.string.error_dialog_query_error_message));
-
-                        Log.e(TAG, "response = null");
-
-                    }
-
-                }
-
-            }, new Response.ErrorListener() {
+                    }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e(TAG, "onResponse Error = " + error.getMessage());
@@ -355,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
 
                 @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders() {
                     //Map<String, String> params = new HashMap<String, String>();
                     Map<String, String> params = new HashMap<>();
                     params.put("Content-Type", "application/x-www-form-urlencoded");
@@ -369,7 +387,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     /**
-     *
      * populate GirdView, setAdapter and setOnItemClickListener
      *
      * @param data LoaderCallbacks data
@@ -381,7 +398,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         setProgressBarVisibility(View.INVISIBLE);
 
-        GridView gv = (GridView) findViewById(R.id.main_grid_view);
+        GridView gv = findViewById(R.id.main_grid_view);
 
         gv.setAdapter(gridViewAdapter);
 
@@ -407,7 +424,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                                 data.getString(MAIN_TABLE_INDEX_COLUMN_OVERVIEW),
                                 data.getString(MAIN_TABLE_INDEX_COLUMN_RELEASE_DATE));
 
-                        MovieDetailsFragment fragment = MovieDetailsFragment.newInstance(movie, mSortUri);
+                        MovieDetailsFragment fragment = MovieDetailsFragment
+                                .newInstance(movie, mSortUri);
+
                         replaceDetailFragment(fragment);
                     }
 
@@ -427,31 +446,26 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                                 data.getString(MAIN_TABLE_INDEX_COLUMN_OVERVIEW),
                                 data.getString(MAIN_TABLE_INDEX_COLUMN_RELEASE_DATE));
 
-                        Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
-                        //intent.putExtra(MainActivity.INTENT_EXTRA_MOVIES_ARRAY_COUNT, moviesArray.size());
-                        //intent.putParcelableArrayListExtra(MainActivity.INTENT_EXTRA_MOVIES_ARRAY, moviesArray);
+                        Intent intent = new Intent(
+                                MainActivity.this,
+                                MovieDetailActivity.class);
                         intent.setData(mSortUri); // pass Uri
                         data.moveToPosition(position);
                         intent.putExtra(INTENT_EXTRA_MOVIE, movie);
                         startActivity(intent);
                     }
-
                 }
-
 
             }
         });
 
         if (data == null) {
-
             errorDialog(getString(R.string.error_dialog_query_error_title), getString(R.string.error_dialog_query_error_message));
-
         }
 
     }
 
     /**
-     *
      * replace fragments
      *
      * @param fragment container
@@ -463,14 +477,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     /**
-     *
      * get sort type form preferences
      *
      * @return current sort type
      */
     private String getSortPreference() {
 
-        SharedPreferences sp = android.preference.PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
 
         String key = getString(R.string.pref_sorting_key);
 
@@ -486,14 +499,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     /**
-     *
      * set new sort preference value
      *
      * @param sortType new sort type value
      */
     private void setSortPreference(String sortType) {
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putString(getString(R.string.pref_sorting_key), sortType);
@@ -506,7 +518,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     /**
-     *
      * update mSortCode, mSortUri, mSortUrl and mSortedByFavorites values based on sort type
      *
      * @param sort new sort type
@@ -543,7 +554,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     /**
-     *
      * update ProgressBar visibility
      *
      * @param visibility visibility state invisible/visible/gone
@@ -559,14 +569,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     /**
-     *
      * update error TextView visibility
      *
      * @param visibility visibility state invisible/visible/gone
      */
     private void updateErrorTextView(int visibility) {
 
-        TextView errorTextView = (TextView) findViewById(R.id.main_error_text_view);
+        TextView errorTextView = findViewById(R.id.main_error_text_view);
         errorTextView.setVisibility(visibility);
 
     }
@@ -574,7 +583,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     /**
      * Shows an error dialog
      *
-     * @param title error dialog title
+     * @param title   error dialog title
      * @param message error dialog message
      */
     private void errorDialog(String title, String message) {
@@ -635,7 +644,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
      */
     private void hideMovieChooserHint() {
 
-        TextView chooseMovieHint = (TextView) findViewById(R.id.choose_movie_hint);
+        TextView chooseMovieHint = findViewById(R.id.choose_movie_hint);
 
         if (chooseMovieHint != null) {
             chooseMovieHint.setVisibility(View.GONE);

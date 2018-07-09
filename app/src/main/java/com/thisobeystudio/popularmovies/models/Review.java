@@ -1,4 +1,4 @@
-package com.thisobeystudio.popularmovies.objects;
+package com.thisobeystudio.popularmovies.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

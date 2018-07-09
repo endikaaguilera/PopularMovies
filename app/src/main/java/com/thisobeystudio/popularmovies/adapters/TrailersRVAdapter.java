@@ -3,6 +3,7 @@ package com.thisobeystudio.popularmovies.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.thisobeystudio.popularmovies.GlideApp;
 import com.thisobeystudio.popularmovies.R;
-import com.thisobeystudio.popularmovies.objects.Trailer;
+import com.thisobeystudio.popularmovies.models.Trailer;
 import com.thisobeystudio.popularmovies.utilities.NetworkUtils;
 
 import java.util.List;
@@ -54,14 +55,16 @@ public class TrailersRVAdapter extends RecyclerView.Adapter<TrailersRVAdapter.Tr
         return trailers.size();
     }
 
+    @NonNull
     @Override
-    public TrailerViewHolder onCreateViewHolder(ViewGroup parent, int i) {
-        View rowView = LayoutInflater.from(parent.getContext()).inflate(R.layout.trailer_card, parent, false);
+    public TrailerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        View rowView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.trailer_card, parent, false);
         return new TrailerViewHolder(rowView);
     }
 
     @Override
-    public void onBindViewHolder(final TrailerViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final TrailerViewHolder viewHolder, int i) {
 
         viewHolder.trailerName.setText(trailers.get(i).getName());
         String videoQuality = trailers.get(i).getSize() + "p";
@@ -69,7 +72,9 @@ public class TrailersRVAdapter extends RecyclerView.Adapter<TrailersRVAdapter.Tr
 
         final int pos = i;
         final String url = NetworkUtils.buildYoutubeThumbnailUrlString(trailers.get(i).getKey());
-        Glide.with(context).load(url).into(viewHolder.trailerImageView);
+        GlideApp.with(context)
+                .load(url)
+                .into(viewHolder.trailerImageView);
 
         viewHolder.trailerImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,11 +96,6 @@ public class TrailersRVAdapter extends RecyclerView.Adapter<TrailersRVAdapter.Tr
             }
         });
 
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
     }
 
     /**

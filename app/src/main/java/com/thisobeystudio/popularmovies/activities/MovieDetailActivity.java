@@ -18,13 +18,33 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.thisobeystudio.popularmovies.GlideApp;
 import com.thisobeystudio.popularmovies.R;
 import com.thisobeystudio.popularmovies.adapters.SectionsPagerAdapter;
 import com.thisobeystudio.popularmovies.data.MoviesProvider;
-import com.thisobeystudio.popularmovies.data.PopularMoviesContract;
-import com.thisobeystudio.popularmovies.objects.Movie;
+import com.thisobeystudio.popularmovies.models.Movie;
 import com.thisobeystudio.popularmovies.utilities.NetworkUtils;
+
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.COLUMN_BACKDROP_PATH;
+import static com.thisobeystudio.popularmovies.data.
+        PopularMoviesContract.PopularMoviesEntry.COLUMN_ID;
+import static com.thisobeystudio.popularmovies.data.
+        PopularMoviesContract.PopularMoviesEntry.COLUMN_ORIGINAL_LANGUAGE;
+import static com.thisobeystudio.popularmovies.data.
+        PopularMoviesContract.PopularMoviesEntry.COLUMN_ORIGINAL_TITLE;
+import static com.thisobeystudio.popularmovies.data.
+        PopularMoviesContract.PopularMoviesEntry.COLUMN_OVERVIEW;
+import static com.thisobeystudio.popularmovies.data.
+        PopularMoviesContract.PopularMoviesEntry.COLUMN_POSTER_PATH;
+import static com.thisobeystudio.popularmovies.data.
+        PopularMoviesContract.PopularMoviesEntry.COLUMN_RELEASE_DATE;
+import static com.thisobeystudio.popularmovies.data.
+        PopularMoviesContract.PopularMoviesEntry.COLUMN_TITLE;
+import static com.thisobeystudio.popularmovies.data.
+        PopularMoviesContract.PopularMoviesEntry.COLUMN_VOTE_AVERAGE;
+import static com.thisobeystudio.popularmovies.data.
+        PopularMoviesContract.PopularMoviesEntry.CONTENT_URI_FAVORITES;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
@@ -49,14 +69,16 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_movie_detail);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        if (savedInstanceState == null && getIntent() != null && getIntent().hasExtra(MainActivity.INTENT_EXTRA_MOVIE)) {
+        if (savedInstanceState == null &&
+                getIntent() != null &&
+                getIntent().hasExtra(MainActivity.INTENT_EXTRA_MOVIE)) {
 
             mUri = getIntent().getData();
             mMovie = getIntent().getParcelableExtra(MainActivity.INTENT_EXTRA_MOVIE);
@@ -102,7 +124,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-         /*
+        /*
          * Normally, calling setDisplayHomeAsUpEnabled(true) (we do so in onCreate here) as well as
          * declaring the parent activity in the AndroidManifest is all that is required to get the
          * up button working properly. However, in this case, we want to navigate to the previous
@@ -128,12 +150,13 @@ public class MovieDetailActivity extends AppCompatActivity {
      */
     private void setupPager() {
 
-        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), MovieDetailActivity.this, mMovie);
+        SectionsPagerAdapter mSectionsPagerAdapter =
+                new SectionsPagerAdapter(getSupportFragmentManager(), this, mMovie);
 
-        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
+        ViewPager mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
     }
@@ -144,25 +167,29 @@ public class MovieDetailActivity extends AppCompatActivity {
     private void loadToolBarContent() {
 
         // COLLAPSING TOOLBAR
-        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
+        CollapsingToolbarLayout ctl = findViewById(R.id.collapsing_toolbar_layout);
         //collapsingToolbarLayout.setExpandedTitleColor(Color.parseColor("#FFFFFF"));
         //collapsingToolbarLayout.setCollapsedTitleTextColor(Color.parseColor("#00FFFFFF"));
-        collapsingToolbarLayout.setTitle(mMovie.getTitle());
+        ctl.setTitle(mMovie.getTitle());
 
         // BACKDROP IMAGE
-        ImageView backdropImage = (ImageView) findViewById(R.id.backdrop_image);
-
-        Glide.with(MovieDetailActivity.this).load(NetworkUtils.BACKDROP_IMAGES_URL + mMovie.getBackdropPath()).into(backdropImage);
+        ImageView backdropImage = findViewById(R.id.backdrop_image);
+        String backdropImageUrl = NetworkUtils.BACKDROP_IMAGES_URL + mMovie.getBackdropPath();
+        GlideApp.with(MovieDetailActivity.this)
+                .load(backdropImageUrl)
+                .into(backdropImage);
 
         // POSTER IMAGE
-        ImageView movieImage = (ImageView) findViewById(R.id.movie_image);
+        ImageView movieImage = findViewById(R.id.movie_image);
         movieImage.setScaleType(ImageView.ScaleType.FIT_XY);
-        Glide.with(MovieDetailActivity.this).load(NetworkUtils.IMAGES_URL + mMovie.getPosterPath()).into(movieImage);
+        String posterImageUrl = NetworkUtils.IMAGES_URL + mMovie.getPosterPath();
+        GlideApp.with(MovieDetailActivity.this)
+                .load(posterImageUrl)
+                .into(movieImage);
 
         // YEAR
-        //String year = getString(R.string.movie_details_year) + " " + mMovie.getReleaseDate().substring(0, 4);
         String year = mMovie.getReleaseDate();
-        TextView yearTextView = (TextView) findViewById(R.id.year_text_view);
+        TextView yearTextView = findViewById(R.id.year_text_view);
         yearTextView.setText(year);
 
     }
@@ -172,19 +199,21 @@ public class MovieDetailActivity extends AppCompatActivity {
      */
     private void setupFabButton() {
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = findViewById(R.id.fab);
         // CHECK IF IS A FAVORITE MOVIE AND HANDLE FAV BUTTON
         if (MoviesProvider.checkIfIsFavorite(MovieDetailActivity.this, mMovie.getId())) {
 
-            //fab.setBackgroundTintList(ContextCompat.getColorStateList(MovieDetailActivity.this, R.color.colorAccent));
             fab.setImageResource(R.drawable.ic_favoried_24dp);
 
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    Snackbar.make(view, "Removed from favorites", Snackbar.LENGTH_SHORT)
-                            .setAction("OK", null).show();
+                    Snackbar.make(view,
+                            getString(R.string.removed_from_favorites),
+                            Snackbar.LENGTH_SHORT)
+                            .setAction("OK", null)
+                            .show();
                     removeFromFavorites(mMovie.getId());
 
                 }
@@ -192,15 +221,17 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         } else {
 
-            //fab.setBackgroundTintList(ContextCompat.getColorStateList(MovieDetailActivity.this, R.color.colorAccent));
             fab.setImageResource(R.drawable.ic_unfavorite_24dp);
 
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
-                    Snackbar.make(view, "Saved to favorites", Snackbar.LENGTH_SHORT)
-                            .setAction("OK", null).show();
+                    Snackbar.make(view,
+                            getString(R.string.saved_to_favorites),
+                            Snackbar.LENGTH_SHORT)
+                            .setAction("OK", null)
+                            .show();
 
                     setAsFavorite();
 
@@ -222,8 +253,11 @@ public class MovieDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
-                    Snackbar.make(view, "Removed from favorites", Snackbar.LENGTH_SHORT)
-                            .setAction("OK", null).show();
+                    Snackbar.make(view,
+                            getString(R.string.removed_from_favorites),
+                            Snackbar.LENGTH_SHORT)
+                            .setAction("OK", null)
+                            .show();
 
                     removeFromFavorites(mMovie.getId());
                 }
@@ -234,22 +268,22 @@ public class MovieDetailActivity extends AppCompatActivity {
             ContentValues[] contentValuesArr = new ContentValues[1];
 
             ContentValues contentValues = new ContentValues();
-            contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_ID, mMovie.getId());
-            contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_VOTE_AVERAGE, mMovie.getVoteAverage());
-            contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_TITLE, mMovie.getTitle());
-            contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_POSTER_PATH, mMovie.getPosterPath());
-            contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_ORIGINAL_LANGUAGE, mMovie.getOriginalLanguage());
-            contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_ORIGINAL_TITLE, mMovie.getOriginalTitle());
-            contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_BACKDROP_PATH, mMovie.getBackdropPath());
-            contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_OVERVIEW, mMovie.getOverview());
-            contentValues.put(PopularMoviesContract.PopularMoviesEntry.COLUMN_RELEASE_DATE, mMovie.getReleaseDate());
+            contentValues.put(COLUMN_ID, mMovie.getId());
+            contentValues.put(COLUMN_VOTE_AVERAGE, mMovie.getVoteAverage());
+            contentValues.put(COLUMN_TITLE, mMovie.getTitle());
+            contentValues.put(COLUMN_POSTER_PATH, mMovie.getPosterPath());
+            contentValues.put(COLUMN_ORIGINAL_LANGUAGE, mMovie.getOriginalLanguage());
+            contentValues.put(COLUMN_ORIGINAL_TITLE, mMovie.getOriginalTitle());
+            contentValues.put(COLUMN_BACKDROP_PATH, mMovie.getBackdropPath());
+            contentValues.put(COLUMN_OVERVIEW, mMovie.getOverview());
+            contentValues.put(COLUMN_RELEASE_DATE, mMovie.getReleaseDate());
 
             contentValuesArr[0] = contentValues;
 
-            if (getContentResolver().bulkInsert(PopularMoviesContract.PopularMoviesEntry.CONTENT_URI_FAVORITES, contentValuesArr) > 0) {
+            if (getContentResolver().bulkInsert(CONTENT_URI_FAVORITES, contentValuesArr) > 0) {
 
-                if (mUri.equals(PopularMoviesContract.PopularMoviesEntry.CONTENT_URI_FAVORITES)) {
-                    getContentResolver().notifyChange(PopularMoviesContract.PopularMoviesEntry.CONTENT_URI_FAVORITES, null);
+                if (mUri.equals(CONTENT_URI_FAVORITES)) {
+                    getContentResolver().notifyChange(CONTENT_URI_FAVORITES, null);
                 }
 
             }
@@ -259,7 +293,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * removes movie from favorites by id
      * And update fab button OnClickListener
      *
@@ -271,8 +304,11 @@ public class MovieDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Snackbar.make(view, "Saved to favorites", Snackbar.LENGTH_SHORT)
-                        .setAction("OK", null).show();
+                Snackbar.make(view,
+                        getString(R.string.saved_to_favorites),
+                        Snackbar.LENGTH_SHORT)
+                        .setAction("OK", null)
+                        .show();
 
                 setAsFavorite();
             }
@@ -281,10 +317,12 @@ public class MovieDetailActivity extends AppCompatActivity {
         fab.setImageResource(R.drawable.ic_unfavorite_24dp);
 
 
-        if (getContentResolver().delete(PopularMoviesContract.PopularMoviesEntry.CONTENT_URI_FAVORITES.buildUpon().appendPath(String.valueOf(id)).build(), null, null) > 0) {
+        Uri deleteUri = CONTENT_URI_FAVORITES.buildUpon().appendPath(String.valueOf(id)).build();
 
-            if (mUri.equals(PopularMoviesContract.PopularMoviesEntry.CONTENT_URI_FAVORITES)) {
-                getContentResolver().notifyChange(PopularMoviesContract.PopularMoviesEntry.CONTENT_URI_FAVORITES, null);
+        if (getContentResolver().delete(deleteUri, null, null) > 0) {
+
+            if (mUri.equals(CONTENT_URI_FAVORITES)) {
+                getContentResolver().notifyChange(CONTENT_URI_FAVORITES, null);
             }
 
         }
@@ -299,7 +337,7 @@ public class MovieDetailActivity extends AppCompatActivity {
      */
     private void errorDialog(String title, String message) {
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MovieDetailActivity.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder.setMessage(message);
 
@@ -308,9 +346,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         alertDialogBuilder.setNegativeButton(getString(R.string.retry), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-
                 recreate();
-
             }
         });
 

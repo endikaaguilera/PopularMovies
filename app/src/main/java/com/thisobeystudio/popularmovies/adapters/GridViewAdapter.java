@@ -7,10 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.bumptech.glide.Glide;
+import com.thisobeystudio.popularmovies.GlideApp;
 import com.thisobeystudio.popularmovies.activities.MainActivity;
 import com.thisobeystudio.popularmovies.R;
-import com.thisobeystudio.popularmovies.objects.GridViewImageView;
+import com.thisobeystudio.popularmovies.custom.GridViewImageView;
 import com.thisobeystudio.popularmovies.utilities.NetworkUtils;
 
 import static android.widget.ImageView.ScaleType.FIT_XY;
@@ -45,7 +45,9 @@ public final class GridViewAdapter extends BaseAdapter {
             // Get the image URL for the current position.
             final String path = getItem(position);
 
-            Glide.with(context).load(NetworkUtils.IMAGES_URL + path).into(view);
+            GlideApp.with(context)
+                    .load(NetworkUtils.IMAGES_URL + path)
+                    .into(view);
 
             return view;
 

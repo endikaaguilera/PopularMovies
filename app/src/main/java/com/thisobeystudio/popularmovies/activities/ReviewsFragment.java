@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,16 +19,18 @@ import com.android.volley.toolbox.Volley;
 import com.thisobeystudio.popularmovies.BuildConfig;
 import com.thisobeystudio.popularmovies.R;
 import com.thisobeystudio.popularmovies.adapters.ReviewsRVAdapter;
-import com.thisobeystudio.popularmovies.objects.Movie;
-import com.thisobeystudio.popularmovies.objects.Review;
+import com.thisobeystudio.popularmovies.models.Movie;
+import com.thisobeystudio.popularmovies.models.Review;
 import com.thisobeystudio.popularmovies.utilities.NetworkUtils;
-import com.thisobeystudio.popularmovies.utilities.PopularMoviesJSONUtils;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.thisobeystudio.popularmovies.utilities
+        .PopularMoviesJSONUtils.getMoviesReviewsDataFromJSON;
 
 /**
  * Created by thisobeystudio on 14/8/17.
@@ -64,7 +65,7 @@ public class ReviewsFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
 
         if (reviewsArray != null) {
             outState.putParcelableArrayList(TAG_REVIEWS_ARRAY, reviewsArray);
@@ -74,14 +75,16 @@ public class ReviewsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_reviews, container, false);
 
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(TAG_REVIEWS_ARRAY)) {
@@ -103,16 +106,16 @@ public class ReviewsFragment extends Fragment {
     }
 
     /**
-     *
      * volley query to get current selected movie reviews JSON data
      *
      * @param view root view
      */
     private void getReviewsData(final View view) {
 
-        // Not checking for internet, in case recycler view saved reviews data
-        //if (getArguments().containsKey(MainActivity.INTENT_EXTRA_MOVIE) && NetworkUtils.isInternetAvailable(getActivity())) {
-        if (getArguments().containsKey(MainActivity.INTENT_EXTRA_MOVIE)) {
+        // Not checking for internet, in case recycler view has saved reviews data
+        if (getActivity() != null &&
+                getArguments() != null &&
+                getArguments().containsKey(MainActivity.INTENT_EXTRA_MOVIE)) {
 
             Movie movie = getArguments().getParcelable(MainActivity.INTENT_EXTRA_MOVIE);
 
@@ -121,10 +124,16 @@ public class ReviewsFragment extends Fragment {
                 String movieId = movie.getId();
 
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
-                //URL of the request we are sending
-                String url = NetworkUtils.BASE_URL + "movie/" + movieId + "/" + NetworkUtils.REVIEWS_QUERY + "?" + NetworkUtils.API_KEY_QUERY + "=" + BuildConfig.THE_MOVIE_DB_API_TOKEN;
+                // URL of the request we are sending
+                String url = NetworkUtils.BASE_URL + "movie/" + movieId + "/"
+                        + NetworkUtils.REVIEWS_QUERY + "?"
+                        + NetworkUtils.API_KEY_QUERY + "=" + BuildConfig.THE_MOVIE_DB_API_TOKEN;
 
-                JsonObjectRequest sr = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
+                JsonObjectRequest sr = new JsonObjectRequest(
+                        Request.Method.GET,
+                        url,
+                        new Response.Listener<JSONObject>() {
+
                     @Override
                     public void onResponse(JSONObject response) {
 
@@ -132,7 +141,7 @@ public class ReviewsFragment extends Fragment {
 
                         if (response != null) {
 
-                            reviewsArray = PopularMoviesJSONUtils.getMoviesReviewsDataFromJSON(response);
+                            reviewsArray = getMoviesReviewsDataFromJSON(response);
 
                             if (reviewsArray != null) {
 
@@ -164,7 +173,7 @@ public class ReviewsFragment extends Fragment {
                     }
 
                     @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
+                    public Map<String, String> getHeaders() {
                         Map<String, String> params = new HashMap<>();
                         params.put("Content-Type", "application/x-www-form-urlencoded");
                         return params;
@@ -177,7 +186,6 @@ public class ReviewsFragment extends Fragment {
     }
 
     /**
-     *
      * setup reviews RecyclerView
      *
      * @param v root view

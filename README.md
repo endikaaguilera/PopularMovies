@@ -26,8 +26,6 @@
     - [Nexus 7 Screens](#nexus-7-screens)
     - [Pixel C Screens](#pixel-c-screens)
 
-  - [License Apache 2.0](#license)
-
 # Project Meets Required Specifications
 
 ## Common Project Requirements

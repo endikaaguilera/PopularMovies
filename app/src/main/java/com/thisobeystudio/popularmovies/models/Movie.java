@@ -1,4 +1,4 @@
-package com.thisobeystudio.popularmovies.objects;
+package com.thisobeystudio.popularmovies.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -11,7 +11,22 @@ import android.os.Parcelable;
 
 public class Movie implements Parcelable {
 
-    // AVAILABLE PARAMETERS >>> id, vote_count, video, vote_average, title, popularity, poster_path, original_language, original_title, genre_ids, backdrop_path, adult, overview, release_date;
+    // AVAILABLE PARAMETERS >>>
+    // id,
+    // vote_count,
+    // video,
+    // vote_average,
+    // title,
+    // popularity,
+    // poster_path,
+    // original_language,
+    // original_title,
+    // genre_ids,
+    // backdrop_path,
+    // adult,
+    // overview,
+    // release_date
+
     private final String id; // Can be int
     private final String voteAverage;
     private final String title;
@@ -22,7 +37,15 @@ public class Movie implements Parcelable {
     private final String overview;
     private final String releaseDate;
 
-    public Movie(String id, String voteAverage, String title, String posterPath, String originalLanguage, String originalTitle, String backdropPath, String overview, String releaseDate) {
+    public Movie(String id,
+                 String voteAverage,
+                 String title,
+                 String posterPath,
+                 String originalLanguage,
+                 String originalTitle,
+                 String backdropPath,
+                 String overview,
+                 String releaseDate) {
         this.id = id;
         this.voteAverage = voteAverage;
         this.title = title;

@@ -32,7 +32,8 @@ class PopularMoviesDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_POPULAR_TABLE =
                 "CREATE TABLE " + PopularMoviesEntry.TABLE_POPULAR + " (" +
-                        PopularMoviesEntry._ID + " INTEGER PRIMARY KEY UNIQUE, " + // UNIQUE so always from 1 to 20
+                        // UNIQUE so always from 1 to 20
+                        PopularMoviesEntry._ID + " INTEGER PRIMARY KEY UNIQUE, " +
                         PopularMoviesEntry.COLUMN_ID + " REAL NOT NULL, " +
                         PopularMoviesEntry.COLUMN_VOTE_AVERAGE + " REAL NOT NULL," +
                         PopularMoviesEntry.COLUMN_TITLE + " REAL NOT NULL, " +
@@ -47,7 +48,8 @@ class PopularMoviesDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_TOP_RATED_TABLE =
                 "CREATE TABLE " + PopularMoviesEntry.TABLE_TOP_RATED + " (" +
-                        PopularMoviesEntry._ID + " INTEGER PRIMARY KEY UNIQUE, " + // UNIQUE so always from 1 to 20
+                        // UNIQUE so always from 1 to 20
+                        PopularMoviesEntry._ID + " INTEGER PRIMARY KEY UNIQUE, " +
                         PopularMoviesEntry.COLUMN_ID + " REAL NOT NULL, " +
                         PopularMoviesEntry.COLUMN_VOTE_AVERAGE + " REAL NOT NULL," +
                         PopularMoviesEntry.COLUMN_TITLE + " REAL NOT NULL, " +
@@ -62,7 +64,8 @@ class PopularMoviesDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_UPCOMING_TABLE =
                 "CREATE TABLE " + PopularMoviesEntry.TABLE_UPCOMING + " (" +
-                        PopularMoviesEntry._ID + " INTEGER PRIMARY KEY UNIQUE, " + // UNIQUE so always from 1 to 20
+                        // UNIQUE so always from 1 to 20
+                        PopularMoviesEntry._ID + " INTEGER PRIMARY KEY UNIQUE, " +
                         PopularMoviesEntry.COLUMN_ID + " REAL NOT NULL, " +
                         PopularMoviesEntry.COLUMN_VOTE_AVERAGE + " REAL NOT NULL," +
                         PopularMoviesEntry.COLUMN_TITLE + " REAL NOT NULL, " +
@@ -77,7 +80,8 @@ class PopularMoviesDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_FAVORITE_TABLE =
                 "CREATE TABLE " + PopularMoviesEntry.TABLE_FAVORITE + " (" +
-                        PopularMoviesEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + // AUTOINCREMENT
+                        // AUTOINCREMENT
+                        PopularMoviesEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         PopularMoviesEntry.COLUMN_ID + " REAL NOT NULL, " +
                         PopularMoviesEntry.COLUMN_VOTE_AVERAGE + " REAL NOT NULL," +
                         PopularMoviesEntry.COLUMN_TITLE + " REAL NOT NULL, " +
@@ -111,7 +115,8 @@ class PopularMoviesDbHelper extends SQLiteOpenHelper {
 
     /**
      *
-     * This is just an example of alter table on db upgrades. never will be executed due that the project is finished.
+     * This is just an example of alter table on db upgrades.
+     * never will be executed due that the project is finished.
      *
      * @param sqLiteDatabase Database that is being upgraded
      * @param oldVersion     The old database version

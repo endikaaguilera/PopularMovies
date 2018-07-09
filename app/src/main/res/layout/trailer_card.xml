@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.thisobeystudio.popularmovies.objects.TrailerImage
+            <com.thisobeystudio.popularmovies.custom.TrailerImage
                 android:id="@+id/trailer_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

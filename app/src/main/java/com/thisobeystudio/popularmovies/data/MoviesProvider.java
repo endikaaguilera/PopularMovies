@@ -12,6 +12,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.COLUMN_ID;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.TABLE_FAVORITE;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.TABLE_POPULAR;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.TABLE_TOP_RATED;
+import static com.thisobeystudio.popularmovies.data
+        .PopularMoviesContract.PopularMoviesEntry.TABLE_UPCOMING;
+
 /**
  * Created by thisobeystudio on 5/8/17.
  * Copyright: (c) 2017 ThisObey Studio
@@ -44,7 +55,8 @@ public class MoviesProvider extends ContentProvider {
         matcher.addURI(authority, PopularMoviesContract.PATH_TOP_RATED, CODE_TOP_RATED);
         matcher.addURI(authority, PopularMoviesContract.PATH_UPCOMING, CODE_UPCOMING);
         matcher.addURI(authority, PopularMoviesContract.PATH_FAVORITES, CODE_FAVORITES);
-        matcher.addURI(authority, PopularMoviesContract.PATH_FAVORITES + "/#", CODE_FAVORITES_WITH_ID);
+        matcher.addURI(authority,
+                PopularMoviesContract.PATH_FAVORITES + "/#", CODE_FAVORITES_WITH_ID);
 
         return matcher;
     }
@@ -64,19 +76,19 @@ public class MoviesProvider extends ContentProvider {
 
             case CODE_POPULAR:
 
-                return myInsert(values, PopularMoviesContract.PopularMoviesEntry.TABLE_POPULAR, uri);
+                return myInsert(values, TABLE_POPULAR, uri);
 
             case CODE_TOP_RATED:
 
-                return myInsert(values, PopularMoviesContract.PopularMoviesEntry.TABLE_TOP_RATED, uri);
+                return myInsert(values, TABLE_TOP_RATED, uri);
 
             case CODE_UPCOMING:
 
-                return myInsert(values, PopularMoviesContract.PopularMoviesEntry.TABLE_UPCOMING, uri);
+                return myInsert(values, TABLE_UPCOMING, uri);
 
             case CODE_FAVORITES:
 
-                return myInsert(values, PopularMoviesContract.PopularMoviesEntry.TABLE_FAVORITE, uri);
+                return myInsert(values, TABLE_FAVORITE, uri);
 
             default:
                 return super.bulkInsert(uri, values);
@@ -137,7 +149,7 @@ public class MoviesProvider extends ContentProvider {
             case CODE_POPULAR: {
 
                 cursor = mPopularOpenHelper.getReadableDatabase().query(
-                        PopularMoviesContract.PopularMoviesEntry.TABLE_POPULAR,
+                        TABLE_POPULAR,
                         projection,
                         selection,
                         selectionArgs,
@@ -151,7 +163,7 @@ public class MoviesProvider extends ContentProvider {
             case CODE_TOP_RATED: {
 
                 cursor = mPopularOpenHelper.getReadableDatabase().query(
-                        PopularMoviesContract.PopularMoviesEntry.TABLE_TOP_RATED,
+                        TABLE_TOP_RATED,
                         projection,
                         selection,
                         selectionArgs,
@@ -165,7 +177,7 @@ public class MoviesProvider extends ContentProvider {
             case CODE_UPCOMING: {
 
                 cursor = mPopularOpenHelper.getReadableDatabase().query(
-                        PopularMoviesContract.PopularMoviesEntry.TABLE_UPCOMING,
+                        TABLE_UPCOMING,
                         projection,
                         selection,
                         selectionArgs,
@@ -179,31 +191,13 @@ public class MoviesProvider extends ContentProvider {
             case CODE_FAVORITES: {
 
                 cursor = mPopularOpenHelper.getReadableDatabase().query(
-                        PopularMoviesContract.PopularMoviesEntry.TABLE_FAVORITE,
+                        TABLE_FAVORITE,
                         projection,
                         selection,
                         selectionArgs,
                         null,
                         null,
                         sortOrder);
-
-                /*
-                cursor = mPopularOpenHelper.getReadableDatabase().rawQuery(
-                        "SELECT poster_path, favorite FROM popular WHERE favorite = 'YES' " +
-                                "UNION " +
-                                "SELECT poster_path, favorite FROM top_rated WHERE favorite = 'YES' " +
-                                "UNION " +
-                                "SELECT poster_path, favorite FROM upcoming WHERE favorite = 'YES'",
-                        selectionArgs);
-
-                cursor = "SELECT " +
-                                "popular.poster_path, popular.favorite, " +
-                                "top_rated.poster_path, top_rated.favorite, " +
-                                "upcoming.poster_path, upcoming.favorite " +
-                                //"FROM popular, upcoming WHERE popular.favorite = 'YES' OR upcoming.favorite = 'YES'", selectionArgs);
-                                //"FROM popular JOIN upcoming ON popular.id = upcoming.id WHERE popular.favorite = 'YES' OR upcoming.favorite = 'YES'", null);
-                                "FROM popular, top_rated, upcoming WHERE popular.favorite = 'YES' AND top_rated.favorite = 'YES' AND upcoming.favorite = 'YES'", null);
-                */
 
                 break;
             }
@@ -234,7 +228,7 @@ public class MoviesProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case CODE_POPULAR:
                 numRowsDeleted = mPopularOpenHelper.getWritableDatabase().delete(
-                        PopularMoviesContract.PopularMoviesEntry.TABLE_POPULAR,
+                        TABLE_POPULAR,
                         selection,
                         selectionArgs);
 
@@ -242,7 +236,7 @@ public class MoviesProvider extends ContentProvider {
 
             case CODE_TOP_RATED:
                 numRowsDeleted = mPopularOpenHelper.getWritableDatabase().delete(
-                        PopularMoviesContract.PopularMoviesEntry.TABLE_TOP_RATED,
+                        TABLE_TOP_RATED,
                         selection,
                         selectionArgs);
 
@@ -250,7 +244,7 @@ public class MoviesProvider extends ContentProvider {
 
             case CODE_UPCOMING:
                 numRowsDeleted = mPopularOpenHelper.getWritableDatabase().delete(
-                        PopularMoviesContract.PopularMoviesEntry.TABLE_UPCOMING,
+                        TABLE_UPCOMING,
                         selection,
                         selectionArgs);
 
@@ -258,8 +252,8 @@ public class MoviesProvider extends ContentProvider {
 
             case CODE_FAVORITES_WITH_ID:
                 numRowsDeleted = mPopularOpenHelper.getWritableDatabase().delete(
-                        PopularMoviesContract.PopularMoviesEntry.TABLE_FAVORITE,
-                        PopularMoviesContract.PopularMoviesEntry.COLUMN_ID + " = ?",
+                        TABLE_FAVORITE,
+                        COLUMN_ID + " = ?",
                         new String[]{String.valueOf(ContentUris.parseId(uri))});
 
                 break;
@@ -295,7 +289,10 @@ public class MoviesProvider extends ContentProvider {
     }
 
     @Override
-    public int update(@NonNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(@NonNull Uri uri,
+                      ContentValues values,
+                      String selection,
+                      String[] selectionArgs) {
         throw new RuntimeException("Not implemented");
     }
 
@@ -340,9 +337,9 @@ public class MoviesProvider extends ContentProvider {
         try {
 
             Cursor cursor = db.query(
-                    PopularMoviesContract.PopularMoviesEntry.TABLE_FAVORITE,
+                    TABLE_FAVORITE,
                     null,
-                    PopularMoviesContract.PopularMoviesEntry.COLUMN_ID + " = '" + id + "'",
+                    COLUMN_ID + " = '" + id + "'",
                     null,
                     null,
                     null,

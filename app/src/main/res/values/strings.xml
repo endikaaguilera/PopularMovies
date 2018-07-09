@@ -44,5 +44,7 @@
     <string name="rating_template" translatable="false">7/10</string>
 
     <string name="share_intent_header">Share Trailer:</string>
+    <string name="removed_from_favorites">Removed from favorites</string>
+    <string name="saved_to_favorites">Saved to favorites</string>
 
 </resources>

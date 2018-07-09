@@ -28,5 +28,7 @@
     <string name="choose_movie_hint">Selecciona una película</string>
 
     <string name="share_intent_header">Compartir Trailer:</string>
+    <string name="removed_from_favorites">Eliminado de favoritas</string>
+    <string name="saved_to_favorites">Guardado en favoritas</string>
 
 </resources>

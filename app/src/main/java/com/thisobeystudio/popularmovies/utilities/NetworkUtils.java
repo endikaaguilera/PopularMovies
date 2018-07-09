@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import static com.thisobeystudio.popularmovies.BuildConfig.THE_MOVIE_DB_API_TOKEN;
+
 /**
  * Created by thisobeystudio on 29/7/17.
  * Copyright: (c) 2017 ThisObey Studio
@@ -12,7 +14,8 @@ import android.net.NetworkInfo;
 
 public final class NetworkUtils {
 
-    // image url example = http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg
+    // url examples
+    // http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg
     // http://api.themoviedb.org/3/movie/324852/videos
     // https://www.youtube.com/watch?v=6DBi41reeF0
 
@@ -50,9 +53,13 @@ public final class NetworkUtils {
      * @return true if internet is available
      */
     public static boolean isInternetAvailable(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (context == null) return false;
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null) return false;
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        return activeNetwork != null && activeNetwork.isConnected();
+//        return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
     /**
@@ -60,7 +67,7 @@ public final class NetworkUtils {
      * @return url
      */
     public static String buildUrlString(String sort) {
-        return BASE_URL + sort + "?" + API_KEY_QUERY + "=" + com.thisobeystudio.popularmovies.BuildConfig.THE_MOVIE_DB_API_TOKEN;
+        return BASE_URL + sort + "?" + API_KEY_QUERY + "=" + THE_MOVIE_DB_API_TOKEN;
     }
 
     /**
@@ -68,24 +75,10 @@ public final class NetworkUtils {
      * @return youtube thumbnail url
      */
     public static String buildYoutubeThumbnailUrlString(String key) {
-        return NetworkUtils.YOUTUBE_THUMBNAIL_URL_START + key + NetworkUtils.YOUTUBE_THUMBNAIL_URL_END;
+        return NetworkUtils.YOUTUBE_THUMBNAIL_URL_START +
+                key +
+                NetworkUtils.YOUTUBE_THUMBNAIL_URL_END;
     }
-
-        /*
-    public static URL buildUrl(String sort) {
-        Uri queryUri = Uri.parse(BASE_URL + sort).buildUpon()
-                .appendQueryParameter(API_KEY_QUERY, com.thisobeystudio.popularmovies.BuildConfig.THE_MOVIE_DB_API_TOKEN)
-                .build();
-        try {
-            URL queryUrl = new URL(queryUri.toString());
-            Log.v(NetworkUtils.class.getSimpleName(), "URL: " + queryUrl);
-            return queryUrl;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    */
 
 }
 

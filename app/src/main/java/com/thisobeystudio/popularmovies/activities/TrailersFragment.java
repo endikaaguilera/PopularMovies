@@ -1,8 +1,10 @@
 package com.thisobeystudio.popularmovies.activities;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,17 +21,19 @@ import com.android.volley.toolbox.Volley;
 import com.thisobeystudio.popularmovies.BuildConfig;
 import com.thisobeystudio.popularmovies.R;
 import com.thisobeystudio.popularmovies.adapters.TrailersRVAdapter;
-import com.thisobeystudio.popularmovies.objects.GridSpacingItemDecoration;
-import com.thisobeystudio.popularmovies.objects.Movie;
-import com.thisobeystudio.popularmovies.objects.Trailer;
+import com.thisobeystudio.popularmovies.custom.GridSpacingItemDecoration;
+import com.thisobeystudio.popularmovies.models.Movie;
+import com.thisobeystudio.popularmovies.models.Trailer;
 import com.thisobeystudio.popularmovies.utilities.NetworkUtils;
-import com.thisobeystudio.popularmovies.utilities.PopularMoviesJSONUtils;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.thisobeystudio.popularmovies.utilities
+        .PopularMoviesJSONUtils.getMoviesTrailersDataFromJSON;
 
 /**
  * Created by thisobeystudio on 14/8/17.
@@ -65,7 +68,7 @@ public class TrailersFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
 
         if (trailersArray != null) {
             outState.putParcelableArrayList(TAG_TRAILERS_ARRAY, trailersArray);
@@ -75,14 +78,16 @@ public class TrailersFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_trailers, container, false);
 
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(TAG_TRAILERS_ARRAY)) {
@@ -110,16 +115,16 @@ public class TrailersFragment extends Fragment {
     }
 
     /**
-     *
      * volley query to get current selected movie trailers JSON data
      *
      * @param v root view
      */
     private void getTrailersData(final View v) {
 
-        // Not checking for internet, in case recycler view saved trailers data
-        //if (getArguments().containsKey(MainActivity.INTENT_EXTRA_MOVIE) && NetworkUtils.isInternetAvailable(getActivity())) {
-        if (getArguments().containsKey(MainActivity.INTENT_EXTRA_MOVIE)) {
+        // Not checking for internet, in case recycler view has saved trailers data
+        if (getActivity() != null &&
+                getArguments() != null &&
+                getArguments().containsKey(MainActivity.INTENT_EXTRA_MOVIE)) {
 
             Movie movie = getArguments().getParcelable(MainActivity.INTENT_EXTRA_MOVIE);
 
@@ -128,31 +133,37 @@ public class TrailersFragment extends Fragment {
 
                 RequestQueue queue = Volley.newRequestQueue(getActivity());
                 //URL of the request we are sending
-                String url = NetworkUtils.BASE_URL + "movie/" + movieId + "/" + NetworkUtils.TRAILERS_QUERY + "?" + NetworkUtils.API_KEY_QUERY + "=" + BuildConfig.THE_MOVIE_DB_API_TOKEN;
+                String url = NetworkUtils.BASE_URL + "movie/" + movieId + "/" +
+                        NetworkUtils.TRAILERS_QUERY + "?" +
+                        NetworkUtils.API_KEY_QUERY + "=" + BuildConfig.THE_MOVIE_DB_API_TOKEN;
 
-                JsonObjectRequest sr = new JsonObjectRequest(Request.Method.GET, url, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
+                JsonObjectRequest sr = new JsonObjectRequest(
+                        Request.Method.GET,
+                        url,
+                        new Response.Listener<JSONObject>() {
 
-                        if (response != null) {
+                            @Override
+                            public void onResponse(JSONObject response) {
 
-                            trailersArray = PopularMoviesJSONUtils.getMoviesTrailersDataFromJSON(response);
+                                if (response != null) {
 
-                            if (trailersArray != null) {
+                                    trailersArray = getMoviesTrailersDataFromJSON(response);
 
-                                setupTrailersRecyclerView(v);
+                                    if (trailersArray != null) {
 
-                            } else {
-                                Log.e(TAG, "NO AVAILABLE TRAILERS");
+                                        setupTrailersRecyclerView(v);
+
+                                    } else {
+                                        Log.e(TAG, "NO AVAILABLE TRAILERS");
+                                    }
+
+                                } else {
+                                    Log.e(TAG, "RESPONSE = NULL");
+                                }
+
                             }
 
-                        } else {
-                            Log.e(TAG, "RESPONSE = NULL");
-                        }
-
-                    }
-
-                }, new Response.ErrorListener() {
+                        }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
@@ -168,7 +179,7 @@ public class TrailersFragment extends Fragment {
                     }
 
                     @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
+                    public Map<String, String> getHeaders() {
                         Map<String, String> params = new HashMap<>();
                         params.put("Content-Type", "application/x-www-form-urlencoded");
                         return params;
@@ -181,7 +192,6 @@ public class TrailersFragment extends Fragment {
     }
 
     /**
-     *
      * setup trailers RecyclerView
      *
      * @param v root view
@@ -195,12 +205,20 @@ public class TrailersFragment extends Fragment {
         // in content do not change the layout size of the RecyclerView
         trailersRv.setHasFixedSize(false);
 
+        FragmentActivity activity = getActivity();
+
+        if (activity == null) return;
+
+        Resources res = activity.getResources();
+
+        if (res == null) return;
+
         // use a linear manager
-        int columns = getActivity().getResources().getInteger(R.integer.youtube_items_per_row);
+        int columns = res.getInteger(R.integer.youtube_items_per_row);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), columns);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(activity, columns);
 
-        int margin = (int) getActivity().getResources().getDimension(R.dimen.card_view_margin);
+        int margin = (int) res.getDimension(R.dimen.card_view_margin);
         trailersRv.addItemDecoration(new GridSpacingItemDecoration(columns, margin));
 
         trailersRv.setLayoutManager(mLayoutManager);
@@ -208,7 +226,7 @@ public class TrailersFragment extends Fragment {
         trailersRv.setNestedScrollingEnabled(false); // Make scroll smoothly
 
         // specify an adapter
-        TrailersRVAdapter trailersRVAdapter = new TrailersRVAdapter(getActivity(), trailersArray);
+        TrailersRVAdapter trailersRVAdapter = new TrailersRVAdapter(activity, trailersArray);
         trailersRv.setAdapter(trailersRVAdapter);
 
     }

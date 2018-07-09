@@ -9,7 +9,7 @@ import com.thisobeystudio.popularmovies.activities.OverviewFragment;
 import com.thisobeystudio.popularmovies.R;
 import com.thisobeystudio.popularmovies.activities.ReviewsFragment;
 import com.thisobeystudio.popularmovies.activities.TrailersFragment;
-import com.thisobeystudio.popularmovies.objects.Movie;
+import com.thisobeystudio.popularmovies.models.Movie;
 
 /**
  * Created by thisobeystudio on 11/8/17.
@@ -19,8 +19,8 @@ import com.thisobeystudio.popularmovies.objects.Movie;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    private Context context = null;
-    private Movie movie = null;
+    private final Context context;
+    private final Movie movie;
 
     public SectionsPagerAdapter(FragmentManager fm, Context context, Movie movie) {
         super(fm);
